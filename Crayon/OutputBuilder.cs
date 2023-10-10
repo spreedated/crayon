@@ -4,7 +4,7 @@ namespace Crayon
 {
     internal class OutputBuilder : IOutput
     {
-        private readonly StringBuilder _formatting = new StringBuilder();
+        private readonly StringBuilder _formatting = new();
 
         public IOutput Black() => Append(Colors.Black);
         public IOutput Red() => Append(Colors.Red);
