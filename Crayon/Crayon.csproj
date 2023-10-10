@@ -6,6 +6,7 @@
       <RootNamespace>Crayon</RootNamespace>
       <Nullable>enable</Nullable>
       <LangVersion>latest</LangVersion>
+      <NoWarn>1701;1702;IDE0009</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
