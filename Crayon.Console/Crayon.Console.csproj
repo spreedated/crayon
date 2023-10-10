@@ -9,11 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Crayon\Crayon.csproj" />
+      <Compile Remove="Properties\**" />
+      <EmbeddedResource Remove="Properties\**" />
+      <None Remove="Properties\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Properties\" />
+      <ProjectReference Include="..\Crayon\Crayon.csproj" />
     </ItemGroup>
 
 </Project>

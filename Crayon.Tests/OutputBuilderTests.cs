@@ -1,19 +1,19 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAssertions;
 using Xunit;
 
 namespace Crayon.Tests
 {
     public class OutputBuilderTests
     {
-        public OutputBuilderTests() => 
+        public OutputBuilderTests() =>
             Output.Enable();
 
         [Fact]
-        public static void Chaining() => 
+        public static void Chaining() =>
             Output
                 .Green()
                 .Bold()
@@ -22,15 +22,15 @@ namespace Crayon.Tests
                 .Be("\u001b[32m\u001b[1minput\u001b[0m");
 
         [Fact]
-        public void OutputChainContainsMethodsForAllColors() => 
+        public void OutputChainContainsMethodsForAllColors() =>
             TestConstants<Colors>();
-        
+
         [Fact]
         public void OutputChainContainsMethodsForAllDecorations() =>
             TestConstants<Decorations>();
 
         [Fact]
-        public void AllOutputInSpecifiedColor() => 
+        public void AllOutputInSpecifiedColor() =>
             TestMethods<Colors>();
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Crayon.Tests
             TestMethods<Decorations>();
 
         [Fact]
-        public void NestedResetsReplaced() => 
+        public void NestedResetsReplaced() =>
             Output
                 .Green()
                 .Text($"something {Output.Red("red in the middle")} but green again")
@@ -46,7 +46,7 @@ namespace Crayon.Tests
                 .Be("\u001b[32msomething \u001b[31mred in the middle\u001b[0m\u001b[32m but green again\u001b[0m");
 
         [Fact]
-        public void FromRgb() => 
+        public void FromRgb() =>
             Output
                 .Rgb(55, 115, 155).
                 Text("from rgb!")
@@ -54,14 +54,14 @@ namespace Crayon.Tests
                 .Be("\u001b[38;2;55;115;155mfrom rgb!\u001b[0m");
 
         [Fact]
-        public void BoldFromRgb() => 
+        public void BoldFromRgb() =>
             Output
                 .Bold()
                 .Rgb(55, 115, 155)
                 .Text("from rgb!")
                 .Should()
                 .Be("\u001b[1m\u001b[38;2;55;115;155mfrom rgb!\u001b[0m");
-        
+
         private static IEnumerable<string> ColorMethods() =>
             typeof(Output)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
@@ -69,12 +69,12 @@ namespace Crayon.Tests
 
         private static IEnumerable<string> ConstantsNames<T>() =>
             ConstantsFrom<T>().Select(x => x.name);
-        
+
         private static IEnumerable<(string name, object value)> ConstantsFrom<T>() =>
             typeof(T)
                 .GetRuntimeFields()
                 .Select(x => (x.Name, x.GetRawConstantValue()));
-        
+
         private static void TestConstants<T>()
         {
             var colors = ConstantsNames<T>();
@@ -82,7 +82,7 @@ namespace Crayon.Tests
 
             colors.Should().BeSubsetOf(methods);
         }
-        
+
         private static void TestMethods<T>()
         {
             var colors = ConstantsFrom<T>();

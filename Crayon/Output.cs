@@ -22,7 +22,7 @@ namespace Crayon
             _output = () => new OutputBuilder();
         }
 
-        public static void Disable() => 
+        public static void Disable() =>
             _output = () => new OutputBuilderIgnoreFormat();
 
         public static string Black(string text) => _output().Black(text);

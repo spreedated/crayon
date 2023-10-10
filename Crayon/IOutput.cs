@@ -1,11 +1,11 @@
 namespace Crayon
 {
-    public interface IOutput : 
-        IColors, 
-        IColorsFromText, 
+    public interface IOutput :
+        IColors,
+        IColorsFromText,
         IRgb,
         IRgbFromText,
-        IDecorations, 
+        IDecorations,
         IDecorationsFromText
     {
         IBright Bright { get; }

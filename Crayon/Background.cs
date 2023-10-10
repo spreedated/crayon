@@ -25,7 +25,7 @@ namespace Crayon
         public string Cyan(string input) => Cyan().Text(input);
         public string White(string input) => White().Text(input);
         public string Rgb(byte r, byte g, byte b, string input) => Rgb(r, g, b).Text(input);
-        
+
         private IOutput AppendFormat(int code) => _chain.Append($"\u001b[{code + 10}m");
     }
 }

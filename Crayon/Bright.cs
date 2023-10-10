@@ -5,7 +5,7 @@ namespace Crayon
         private readonly IOutput _chain;
 
         public Bright(IOutput chain) => _chain = chain;
-        
+
         public IOutput Black() => Append(Colors.Black);
         public IOutput Red() => Append(Colors.Red);
         public IOutput Green() => Append(Colors.Green);

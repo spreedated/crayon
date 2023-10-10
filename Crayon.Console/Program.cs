@@ -23,9 +23,9 @@ namespace Crayon.ConsoleApp
             Console.WriteLine(Rgb(55, 115, 155).Text("from rgb!"));
             Console.WriteLine(Black().Background.Rgb(55, 115, 155).Text("from rgb!"));
             Console.WriteLine(Rgb(55, 115, 155).Background.Green().Text("from rgb!"));
-            
+
             Console.WriteLine(Red().Reversed().Green("green"));
-            
+
             var rainbow = new Rainbow(0.5);
             for (var i = 0; i < 15; i++)
             {

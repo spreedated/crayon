@@ -19,7 +19,7 @@ namespace Crayon
             var r = Convert.ToByte(Math.Round(Math.Sin(freq * idx) * 127 + 128));
             var g = Convert.ToByte(Math.Round(Math.Sin(freq * idx + 2) * 127 + 128));
             var b = Convert.ToByte(Math.Round(Math.Sin(freq * idx + 4) * 127 + 128));
-            
+
             return Output.Rgb(r, g, b);
         }
     }

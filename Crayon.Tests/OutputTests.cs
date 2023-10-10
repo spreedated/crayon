@@ -1,8 +1,8 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAssertions;
 using Xunit;
 using static Crayon.Output;
 
@@ -13,7 +13,7 @@ namespace Crayon.Tests
     /// </summary>
     public class OutputTests
     {
-        public OutputTests() => 
+        public OutputTests() =>
             Output.Enable();
 
         [Fact]
@@ -32,13 +32,13 @@ namespace Crayon.Tests
         }
 
         [Fact]
-        public void TestGreen() => 
+        public void TestGreen() =>
             Green("some text")
                 .Should()
                 .Be("\u001b[32msome text\u001b[0m");
 
         [Fact]
-        public void TestRed() => 
+        public void TestRed() =>
             Red("some text")
                 .Should()
                 .Be("\u001b[31msome text\u001b[0m");
@@ -50,13 +50,13 @@ namespace Crayon.Tests
                 .Be("\u001b[32mgreen \u001b[31mred\u001b[0m\u001b[32m green\u001b[0m");
 
         [Fact]
-        public void TestBold() => 
+        public void TestBold() =>
             Bold("some text")
                 .Should()
                 .Be("\u001b[1msome text\u001b[0m");
 
         [Fact]
-        public void TestDim() => 
+        public void TestDim() =>
             Dim("some text")
                 .Should()
                 .Be("\u001b[2msome text\u001b[0m");
@@ -66,13 +66,13 @@ namespace Crayon.Tests
             Red($"{Bold("bold")} text")
                 .Should()
                 .Be("\u001b[31m\u001b[1mbold\u001b[0m\u001b[31m text\u001b[0m");
-                
+
         [Fact]
         public void Background() =>
             Output.Black().Background.Green("text")
                 .Should()
                 .Be("\u001b[30m\u001b[42mtext\u001b[0m");
-        
+
         [Fact]
         public void OutputBackground() =>
             Output.Background.Green("text")
@@ -80,34 +80,34 @@ namespace Crayon.Tests
                 .Be("\u001b[42mtext\u001b[0m");
 
         [Fact]
-        public void AllOutputInSpecifiedColor() => 
+        public void AllOutputInSpecifiedColor() =>
             TestConstants<Colors>();
-       
+
         [Fact]
-        public void AllDecorationsInSpecifiedColor() => 
+        public void AllDecorationsInSpecifiedColor() =>
             TestConstants<Decorations>();
-        
+
         [Fact]
-        public void BrightBlack() => 
+        public void BrightBlack() =>
             Output.Bright.Black("input")
                 .Should()
                 .Be("\u001b[30;1minput\u001b[0m");
-        
+
         [Fact]
-        public void BrightBlackUnderline() => 
+        public void BrightBlackUnderline() =>
             Output.Bright.Black().Underline().Text("input")
                 .Should()
                 .Be("\u001b[30;1m\u001b[4minput\u001b[0m");
-        
+
         [Fact]
-        public void UnderlineBrightBlack() => 
+        public void UnderlineBrightBlack() =>
             Output
                 .Underline().Bright.Black().Text("input")
                 .Should()
                 .Be("\u001b[4m\u001b[30;1minput\u001b[0m");
-                
+
         [Fact]
-        public void Null() => 
+        public void Null() =>
             Output
                 .Underline().Bright.Black().Text(null)
                 .Should()
@@ -115,11 +115,11 @@ namespace Crayon.Tests
 
 
         [Fact]
-        public void OutputContainsFactoryMethodsForAllColors() => 
+        public void OutputContainsFactoryMethodsForAllColors() =>
             TestFactories<Colors>();
 
         [Fact]
-        public void OutputContainsFactoryMethodsForAllDecorations() => 
+        public void OutputContainsFactoryMethodsForAllDecorations() =>
             TestFactories<Decorations>();
 
         private static IEnumerable<MethodInfo> ColorMethods()
@@ -129,8 +129,8 @@ namespace Crayon.Tests
                 .Where(s => !s.GetParameters().Any());
         }
 
-        private static MethodInfo ColorMethod(string name) => 
-            typeof(Output).GetMethod(name, new[] {typeof(string)});
+        private static MethodInfo ColorMethod(string name) =>
+            typeof(Output).GetMethod(name, new[] { typeof(string) });
 
         private static IEnumerable<(string name, object value)> ConstantsFrom<T>() =>
             typeof(T)
@@ -144,17 +144,17 @@ namespace Crayon.Tests
             foreach (var (name, value) in colors)
             {
                 ColorMethod(name)
-                    .Invoke(null, new object[] {"input"})
+                    .Invoke(null, new object[] { "input" })
                     .Should()
                     .Be($"\u001b[{value}minput\u001b[0m");
             }
         }
-        
+
         private static void TestFactories<T>()
         {
             var colors = ConstantsFrom<T>().Select(s => s.name);
             var methods = ColorMethods().ToList();
-            
+
             colors
                 .Should()
                 .BeSubsetOf(methods.Select(m => m.Name));

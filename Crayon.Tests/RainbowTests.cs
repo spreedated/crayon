@@ -1,12 +1,12 @@
-using System.Linq;
 using FluentAssertions;
+using System.Linq;
 using Xunit;
 
 namespace Crayon.Tests
 {
     public class RainbowTests
     {
-        public RainbowTests() => 
+        public RainbowTests() =>
             Output.Enable();
 
         [Fact]
@@ -21,7 +21,7 @@ namespace Crayon.Tests
             }.Select(x => rainbow.Next().Text(x))
             .Should()
             .BeEquivalentTo(
-                "\u001b[38;2;128;243;32ma\u001b[0m", 
+                "\u001b[38;2;128;243;32ma\u001b[0m",
                 "\u001b[38;2;189;204;4mb\u001b[0m",
                 "\u001b[38;2;235;146;6mc\u001b[0m");
         }

@@ -1,5 +1,5 @@
-using System.Linq;
 using FluentAssertions;
+using System.Linq;
 using Xunit;
 
 namespace Crayon.Tests
@@ -18,7 +18,7 @@ namespace Crayon.Tests
                 .Should()
                 .AllBeEquivalentTo("input");
         }
-        
+
         [Fact]
         public static void FromRgb()
         {
